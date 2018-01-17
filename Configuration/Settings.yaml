@@ -1,0 +1,20 @@
+Swisscom:
+  SimpleSamlServiceProvider:
+    authSource: 'default-sp'
+
+TYPO3:
+  Flow:
+    security:
+      authentication:
+        providers:
+          SamlProvider:
+            token: 'Swisscom\SimpleSamlServiceProvider\Security\Authentication\Token\SamlToken'
+            provider: 'Swisscom\SimpleSamlServiceProvider\Security\Authentication\Provider\SamlProvider'
+            #entryPoint: 'Swisscom\SimpleSamlServiceProvider\Security\Authentication\EntryPoint\Saml'
+            #entryPoint: 'WebRedirect'
+            #entryPointOptions:
+            #  routeValues:
+            #    '@package': 'Swisscom.SimpleSamlServiceProvider'
+            #    '@controller': 'Authentication'
+            #    '@action': 'index'
+            #    '@format': 'html'

@@ -1,0 +1,7 @@
+-
+  name: 'Swisscom Simple SAML Service Provider Default'
+  uriPattern: 'swisscom.simplesamlserviceprovider/{@controller}(/{@action})'
+  defaults:
+    '@controller': 'Authentication'
+    '@action':     'index'
+  appendExceedingArguments: true

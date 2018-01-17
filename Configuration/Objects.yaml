@@ -1,0 +1,8 @@
+Swisscom\SimpleSamlServiceProvider\Authentication\AuthenticationInterface:
+  scope: singleton
+  factoryObjectName: Swisscom\SimpleSamlServiceProvider\Authentication\AuthenticationFactory
+  arguments:
+    1:
+      value: 'Swisscom\SimpleSamlServiceProvider\Authentication\SimpleSamlAuthentication'
+    2:
+      setting: Swisscom.SimpleSamlServiceProvider.authSource

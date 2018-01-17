@@ -1,0 +1,16 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Simple SAML Authentication</f:section>
+
+<f:section name="Content">
+    <f:if condition="{account}">
+        <f:then>
+            <p>Authenticated as {account.accountIdentifier}</p>
+            <p><f:link.action action="logout">Logout</f:link.action></p>
+        </f:then>
+        <f:else>
+            <p>No account authenticated</p>
+            <p><f:link.action action="authenticate">Login</f:link.action></p>
+        </f:else>
+    </f:if>
+</f:section>
