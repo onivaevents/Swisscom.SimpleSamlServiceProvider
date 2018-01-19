@@ -9,6 +9,7 @@ use SimpleSAML\Auth\Simple;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Mvc\ActionRequest;
 use TYPO3\Flow\Security\Authentication\Controller\AbstractAuthenticationController;
+use TYPO3\Flow\Security\Exception\AuthenticationRequiredException;
 
 
 class AuthenticationController extends AbstractAuthenticationController
@@ -60,6 +61,17 @@ class AuthenticationController extends AbstractAuthenticationController
         } else {
             $this->redirect('index');
         }
+    }
+
+    /**
+     * @param AuthenticationRequiredException $exception
+     * @return void
+     */
+    protected function onAuthenticationFailure(AuthenticationRequiredException $exception = null)
+    {
+        parent::onAuthenticationFailure($exception);
+
+        $this->redirect('index');
     }
 
     /**
