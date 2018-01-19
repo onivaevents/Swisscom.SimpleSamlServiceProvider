@@ -27,7 +27,7 @@ SimpleSAMLphp uses its own configuration file structure. Copy it to the file pat
     mkdir Configuration/SimpleSamlPhp
     cp -r Packages/Libraries/simplesamlphp/simplesamlphp/config-templates/ Configuration/SimpleSamlPhp/config
     
-Depending on your identity provider, you want to set the 'METADATA CONFIGURATION' in the `config.php` and the 'idp' in the `authsources.php`.
+**MAKE SURE YOU PROPERLY CONFIGURE SimpleSAMLphp. A SECURE CONFIGURATION IS NOT PART OF THE PACKAGE!**
     
 ## Sample setup
 
@@ -36,16 +36,18 @@ is configured most basically as follows:
     
     mkdir Configuration/SimpleSamlPhp/metadata
     cp Packages/Libraries/simplesamlphp/simplesamlphp/metadata-templates/saml20-idp-remote.php Configuration/SimpleSamlPhp/metadata/
+    
+Make sure you set the `metadatadir` property in the config.php accordingly.
 
 Add the following metadata config to `Configuration/SimpleSamlPhp/metadata/saml20-idp-remote.php`:
 
     $metadata['samling'] = array(
         /* Configuration options for the first IdP. */
         'SingleSignOnService' => 'https://capriza.github.io/samling/samling.html',
-        'certificate' => '../../../../samling.pub'
+        'certificate' => 'samling.pub'
     );
 
-The certificate is copied from `https://capriza.github.io/samling/samling.html`. 
+The certificate is copied from `https://capriza.github.io/samling/samling.html` to the cert folder (see `certdir` in config.php). 
 
 ## Integration
 
