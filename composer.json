@@ -8,7 +8,7 @@
         "typo3/flow": "*",
         "simplesamlphp/simplesamlphp": "1.15"
     },
-    "name": "swisscom/SimpleSamlServiceProvider",
+    "name": "swisscom/simplesamlserviceprovider",
     "autoload": {
         "psr-0": {
             "Swisscom\\SimpleSamlServiceProvider": "Classes/"
