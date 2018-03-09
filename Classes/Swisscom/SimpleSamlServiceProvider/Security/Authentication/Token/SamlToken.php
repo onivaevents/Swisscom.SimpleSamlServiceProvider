@@ -31,18 +31,18 @@ class SamlToken extends AbstractToken
      */
     public function updateCredentials(\TYPO3\Flow\Mvc\ActionRequest $actionRequest)
     {
-        /** @var Simple $authentication */
-        $authentication = $this->authenticationInterface;
-        $attributes = $authentication->getAttributes();
-        $authDataArray = $authentication->getAuthDataArray();
+        if ($this->authenticationInterface instanceof Simple) {
+            $attributes = $this->authenticationInterface->getAttributes();
+            $authDataArray = $this->authenticationInterface->getAuthDataArray();
 
-        if (is_array($authDataArray)) {
-            /** @var \SAML2\XML\saml\NameID $nameId */
-            $nameId = $authDataArray['saml:sp:NameID'];
-            if (! empty($nameId)) {
-                $this->setAuthenticationStatus(self::AUTHENTICATION_NEEDED);
-                $this->credentials['username'] = $nameId->value;
-                $this->credentials['attributes'] = $attributes;
+            if (is_array($authDataArray)) {
+                /** @var \SAML2\XML\saml\NameID $nameId */
+                $nameId = $authDataArray['saml:sp:NameID'];
+                if (!empty($nameId)) {
+                    $this->setAuthenticationStatus(self::AUTHENTICATION_NEEDED);
+                    $this->credentials['username'] = $nameId->value;
+                    $this->credentials['attributes'] = $attributes;
+                }
             }
         }
     }

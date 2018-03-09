@@ -19,7 +19,13 @@ class AuthenticationFactory
      */
     public function create($authenticationObjectClassName, $authSource)
     {
-        $authenticationInterface = new $authenticationObjectClassName($authSource);
+        try {
+            $authenticationInterface = new $authenticationObjectClassName($authSource);
+        } catch (\SimpleSAML\Error\CriticalConfigurationError $e) {
+            /* Prevent the application from completely failing if there is a wrong or in-existing config.
+            The config path is set as environment variable via SetEnv(). */
+            $authenticationInterface = null;
+        }
         return $authenticationInterface;
     }
 }
