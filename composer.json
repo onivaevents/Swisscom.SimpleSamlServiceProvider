@@ -2,7 +2,11 @@
     "description": "Neos Flow package containing a SAML service provider based on SimpleSAMLphp.",
     "type": "neos-package",
     "keywords": [
-        "saml", "authentication", "SimpleSAMLphp", "Neos", "Flow"
+        "saml",
+        "authentication",
+        "SimpleSAMLphp",
+        "Neos",
+        "Flow"
     ],
     "require": {
         "typo3/flow": "*",
@@ -17,6 +21,23 @@
     "extra": {
         "neos": {
             "package-key": "Swisscom.SimpleSamlServiceProvider"
-        }
+        },
+        "applied-flow-migrations": [
+            "TYPO3.FLOW3-201201261636",
+            "TYPO3.Fluid-201205031303",
+            "TYPO3.FLOW3-201205292145",
+            "TYPO3.FLOW3-201206271128",
+            "TYPO3.FLOW3-201209201112",
+            "TYPO3.Flow-201209251426",
+            "TYPO3.Flow-201211151101",
+            "TYPO3.Flow-201212051340",
+            "TYPO3.Flow-201310031523",
+            "TYPO3.Flow-201405111147",
+            "TYPO3.Fluid-20141113120800",
+            "TYPO3.Flow-20141113121400",
+            "TYPO3.Fluid-20141121091700",
+            "TYPO3.Fluid-20150214130800",
+            "TYPO3.Flow-20151113161300"
+        ]
     }
 }
