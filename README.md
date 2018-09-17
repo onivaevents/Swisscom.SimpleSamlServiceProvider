@@ -41,7 +41,7 @@ Make sure you set the `metadatadir` property in the config.php accordingly.
 
 Add the following metadata config to `Configuration/SimpleSamlPhp/metadata/saml20-idp-remote.php`:
 
-    $metadata['samling'] = array(
+    $metadata['https://capriza.github.io/samling/samling.html'] = array(
         /* Configuration options for the first IdP. */
         'SingleSignOnService' => 'https://capriza.github.io/samling/samling.html',
         'certificate' => 'samling.pub'
