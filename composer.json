@@ -10,7 +10,7 @@
     ],
     "require": {
         "typo3/flow": "*",
-        "simplesamlphp/simplesamlphp": "1.15"
+        "simplesamlphp/simplesamlphp": "1.16"
     },
     "name": "swisscom/simplesamlserviceprovider",
     "autoload": {
