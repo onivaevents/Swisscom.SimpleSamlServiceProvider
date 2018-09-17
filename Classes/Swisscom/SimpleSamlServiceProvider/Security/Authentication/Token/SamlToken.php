@@ -7,6 +7,7 @@ namespace Swisscom\SimpleSamlServiceProvider\Security\Authentication\Token;
 
 use SimpleSAML\Auth\Simple;
 use TYPO3\Flow\Annotations as Flow;
+use TYPO3\Flow\Object\DependencyInjection\DependencyProxy;
 use TYPO3\Flow\Security\Authentication\Token\AbstractToken;
 
 
@@ -31,10 +32,12 @@ class SamlToken extends AbstractToken
      */
     public function updateCredentials(\TYPO3\Flow\Mvc\ActionRequest $actionRequest)
     {
+        if ($this->authenticationInterface instanceof DependencyProxy) {
+            $this->authenticationInterface->_activateDependency();
+        }
         if ($this->authenticationInterface instanceof Simple) {
             $attributes = $this->authenticationInterface->getAttributes();
             $authDataArray = $this->authenticationInterface->getAuthDataArray();
-
             if (is_array($authDataArray)) {
                 /** @var \SAML2\XML\saml\NameID $nameId */
                 $nameId = $authDataArray['saml:sp:NameID'];
