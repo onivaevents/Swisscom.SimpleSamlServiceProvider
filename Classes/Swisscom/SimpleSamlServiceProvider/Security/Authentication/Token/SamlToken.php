@@ -27,6 +27,12 @@ class SamlToken extends AbstractToken
     protected $credentials = array('username' => '', 'attributes' => array());
 
     /**
+     * @Flow\InjectConfiguration(path="attributeKeys.username")
+     * @var string
+     */
+    protected $usernameAttributeKey;
+
+    /**
      * @param \TYPO3\Flow\Mvc\ActionRequest $actionRequest
      * @return void
      */
@@ -42,10 +48,14 @@ class SamlToken extends AbstractToken
                 /** @var \SAML2\XML\saml\NameID $nameId */
                 $nameId = $authDataArray['saml:sp:NameID'];
                 if (!empty($nameId)) {
-                    $this->setAuthenticationStatus(self::AUTHENTICATION_NEEDED);
                     $this->credentials['username'] = $nameId->value;
-                    $this->credentials['attributes'] = $attributes;
+                } elseif (!empty($this->usernameAttributeKey) && array_key_exists($this->usernameAttributeKey, $attributes)) {
+                    $username = $attributes[$this->usernameAttributeKey];
+                    // ADFS sends the claims back as array
+                    $this->credentials['username'] = is_array($username) ? array_shift($username) : $username;
                 }
+                $this->setAuthenticationStatus(self::AUTHENTICATION_NEEDED);
+                $this->credentials['attributes'] = $attributes;
             }
         }
     }
