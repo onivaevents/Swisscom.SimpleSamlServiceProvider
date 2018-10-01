@@ -39,13 +39,14 @@ class AuthenticationController extends AbstractAuthenticationController
 
     /**
      * @see \Swisscom\SimpleSamlServiceProvider\Security\Authentication\EntryPoint\Saml
+     * @param array $params
      * @return void
      */
-    public function authenticateAction()
+    public function authenticateAction($params = array())
     {
         /** @var Simple $authentication */
         $authentication = $this->authenticationInterface;
-        $authentication->requireAuth();
+        $authentication->requireAuth($params);
 
         parent::authenticateAction();
     }
