@@ -67,7 +67,7 @@ class SamlProvider extends AbstractProvider
         $providerName = $this->name;
         $accountRepository = $this->accountRepository;
         $this->securityContext->withoutAuthorizationChecks(function () use ($credentials, $providerName, $accountRepository, &$account) {
-            $account = $accountRepository->findActiveByAccountIdentifierAndAuthenticationProviderName(strtoupper($credentials['username']), $providerName);
+            $account = $accountRepository->findActiveByAccountIdentifierAndAuthenticationProviderName($credentials['username'], $providerName);
         });
 
         if ($account === null) {
