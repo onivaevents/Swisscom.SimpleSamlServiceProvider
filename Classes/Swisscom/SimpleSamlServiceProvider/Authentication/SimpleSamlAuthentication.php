@@ -8,6 +8,7 @@ namespace Swisscom\SimpleSamlServiceProvider\Authentication;
 
 use Swisscom\SimpleSamlServiceProvider\Security\Authentication\Token\SamlToken;
 use TYPO3\Flow\Annotations as Flow;
+use TYPO3\Flow\Session\SessionInterface;
 
 /**
  * @Flow\Scope("singleton")
@@ -20,6 +21,12 @@ class SimpleSamlAuthentication extends \SimpleSAML\Auth\Simple implements Authen
      * @var array
      */
     protected $logoutParams;
+
+    /**
+     * @var SessionInterface
+     * @Flow\Inject
+     */
+    protected $session;
 
     /**
      * @Flow\Inject
@@ -35,6 +42,11 @@ class SimpleSamlAuthentication extends \SimpleSAML\Auth\Simple implements Authen
         $params = is_array($params) ? array_merge($this->logoutParams, $params) : $this->logoutParams;
         foreach ($this->authenticationManager->getTokens() as $token) {
             if ($token instanceof SamlToken) {
+                /** Logout will redirect and not return to logout process. Therefore the session is destroyed here.
+                 * @see \TYPO3\Flow\Security\Authentication\AuthenticationProviderManager::logout() */
+                if ($this->session->isStarted()) {
+                    $this->session->destroy('Logout through SimpleSamlAuthentication');
+                }
                 parent::logout($params);
                 return;
             }
