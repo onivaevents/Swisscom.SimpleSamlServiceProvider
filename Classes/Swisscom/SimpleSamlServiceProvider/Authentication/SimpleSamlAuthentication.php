@@ -16,10 +16,10 @@ class SimpleSamlAuthentication extends \SimpleSAML\Auth\Simple implements Authen
 {
 
     /**
-     * @Flow\InjectConfiguration
+     * @Flow\InjectConfiguration(path="logoutParams")
      * @var array
      */
-    protected $settings;
+    protected $logoutParams;
 
     /**
      * @Flow\Inject
@@ -32,7 +32,7 @@ class SimpleSamlAuthentication extends \SimpleSAML\Auth\Simple implements Authen
      */
     public function logout($params = null)
     {
-        $params = array_merge($this->settings['logoutParams'], $params);
+        $params = is_array($params) ? array_merge($this->logoutParams, $params) : $this->logoutParams;
         foreach ($this->authenticationManager->getTokens() as $token) {
             if ($token instanceof SamlToken) {
                 parent::logout($params);
