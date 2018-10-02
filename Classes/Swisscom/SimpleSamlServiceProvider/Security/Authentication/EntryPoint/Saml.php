@@ -15,6 +15,13 @@ use TYPO3\Flow\Annotations as Flow;
 
 class Saml extends AbstractEntryPoint
 {
+
+    /**
+     * @Flow\InjectConfiguration
+     * @var array
+     */
+    protected $settings;
+
     /**
      * @var \Swisscom\SimpleSamlServiceProvider\Authentication\AuthenticationInterface
      * @Flow\Inject
@@ -35,7 +42,7 @@ class Saml extends AbstractEntryPoint
             // Should automatically be authenticated by the SamlProvider, but something went wrong.
             throw new Exception('User is authenticated by the identity provider, but not able to be authenticated by system.', 1516117713);
         } else {
-            $authentication->requireAuth();
+            $authentication->requireAuth($this->settings['loginParams']);
         }
     }
 }

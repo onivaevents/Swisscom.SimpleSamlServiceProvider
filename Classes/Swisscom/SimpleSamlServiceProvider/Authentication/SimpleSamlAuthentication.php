@@ -32,6 +32,7 @@ class SimpleSamlAuthentication extends \SimpleSAML\Auth\Simple implements Authen
      */
     public function logout($params = null)
     {
+        $params = array_merge($this->settings['logoutParams'], $params);
         foreach ($this->authenticationManager->getTokens() as $token) {
             if ($token instanceof SamlToken) {
                 parent::logout($params);

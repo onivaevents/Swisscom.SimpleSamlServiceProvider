@@ -44,6 +44,7 @@ class AuthenticationController extends AbstractAuthenticationController
      */
     public function authenticateAction($params = array())
     {
+        $params = array_merge($this->settings['loginParams'], $params);
         /** @var Simple $authentication */
         $authentication = $this->authenticationInterface;
         $authentication->requireAuth($params);
