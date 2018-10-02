@@ -16,6 +16,12 @@ class SimpleSamlAuthentication extends \SimpleSAML\Auth\Simple implements Authen
 {
 
     /**
+     * @Flow\InjectConfiguration
+     * @var array
+     */
+    protected $settings;
+
+    /**
      * @Flow\Inject
      * @var \TYPO3\Flow\Security\Authentication\AuthenticationManagerInterface
      */
@@ -27,7 +33,7 @@ class SimpleSamlAuthentication extends \SimpleSAML\Auth\Simple implements Authen
     public function logout($params = null)
     {
         foreach ($this->authenticationManager->getTokens() as $token) {
-            if ($token instanceof SamlToken && $token->isAuthenticated()) {
+            if ($token instanceof SamlToken) {
                 parent::logout($params);
                 return;
             }

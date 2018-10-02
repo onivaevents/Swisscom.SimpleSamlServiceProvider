@@ -15,12 +15,10 @@ class Package extends BasePackage
      */
     public function boot(\TYPO3\Flow\Core\Bootstrap $bootstrap)
     {
-        /* TODO: Make this work. Problem: Cannot create instance of SimpleSamlAuthentication with constructor args
         $dispatcher = $bootstrap->getSignalSlotDispatcher();
 
         $dispatcher->connect(\TYPO3\Flow\Security\Authentication\AuthenticationProviderManager::class, 'loggedOut',
-            \Swisscom\SimpleSamlServiceProvider\Authentication\SimpleSamlAuthentication::class, 'logout', false
+            \Swisscom\SimpleSamlServiceProvider\Authentication\AuthenticationInterface::class, 'logout', false
         );
-        */
     }
 }
