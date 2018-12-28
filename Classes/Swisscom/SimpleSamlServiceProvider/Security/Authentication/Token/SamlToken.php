@@ -33,12 +33,6 @@ class SamlToken extends AbstractToken
     protected $usernameAttributeKey;
 
     /**
-     * @var string
-     * @Flow\InjectConfiguration(path="authTokenCookieName")
-     */
-    protected $authTokenCookieName;
-
-    /**
      * @param \TYPO3\Flow\Mvc\ActionRequest $actionRequest
      * @return void
      */
@@ -62,11 +56,6 @@ class SamlToken extends AbstractToken
                 }
                 $this->setAuthenticationStatus(self::AUTHENTICATION_NEEDED);
                 $this->credentials['attributes'] = $attributes;
-
-                /* Workaround: Remove the SAML authentication token cookie. The cookies causes problem with CSRF
-                protection whenever it gets renewed. The token cookie is only used to authenticate. From here on, the
-                cookie is not used anymore. */
-                setcookie($this->authTokenCookieName, '', time() - 3600, '/');
             }
         }
     }

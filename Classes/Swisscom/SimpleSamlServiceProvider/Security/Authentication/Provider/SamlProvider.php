@@ -36,6 +36,12 @@ class SamlProvider extends AbstractProvider
     protected $persistenceManager;
 
     /**
+     * @var string
+     * @Flow\InjectConfiguration(path="authTokenCookieName")
+     */
+    protected $authTokenCookieName;
+
+    /**
      * Returns the class names of the tokens this provider can authenticate.
      *
      * @return array
@@ -78,6 +84,11 @@ class SamlProvider extends AbstractProvider
             $authenticationToken->setAccount($account);
             $this->accountRepository->update($account);
             $this->persistenceManager->whitelistObject($account);
+
+            /* Workaround: Remove the SAML authentication token cookie. The cookies causes problem with CSRF
+            protection whenever it gets renewed. The token cookie is only used to authenticate. From here on, the
+            cookie is not used anymore. */
+            setcookie($this->authTokenCookieName, '', time() - 3600, '/');
         }
     }
 
