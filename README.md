@@ -5,40 +5,21 @@
 
 First, install this package via composer. It will add [simplesamlphp/simplesamlphp](https://github.com/simplesamlphp/simplesamlphp) as dependency.
 
-Next, to get SimpleSAMLphp configured some manual work is needed. It is currently not handled by this package. 
+Via post update and install scripts composer will also do the following to make simplesamlphp work within the Flow app:
 
-### Apache
+1. Create symlink `Web/simplesamlphp -> ../Packages/Libraries/simplesamlphp/simplesamlphp/www`
+2. Patch the Apache .htaccess configuration to not rewrite simplesamlphp and set the `SIMPLESAMLPHP_CONFIG_DIR` environment var.
+3. Copy the example config structure to the `SIMPLESAMLPHP_CONFIG_DIR` under `Configuration/SimpleSamlPhp/`
 
-Adjust your configuration file of the virtual host:
-
-        SetEnv SIMPLESAMLPHP_CONFIG_DIR /var/neos-flow-project/Configuration/SimpleSamlPhp/config
-        Alias /simplesaml /var/neos-flow-project/Packages/Libraries/simplesamlphp/simplesamlphp/www
-
-Cf. https://simplesamlphp.org/docs/stable/simplesamlphp-install#section_6
-
-Note: The `SIMPLESAMLPHP_CONFIG_DIR` path is simply a suggestion. It can also be stored elsewhere.
-
-
-### Configuration
-
-SimpleSAMLphp uses its own configuration file structure. Copy it to the file path set above.
-
-    cd /var/neos-flow-project/
-    mkdir Configuration/SimpleSamlPhp
-    cp -r Packages/Libraries/simplesamlphp/simplesamlphp/config-templates/ Configuration/SimpleSamlPhp/config
-    
-**MAKE SURE YOU PROPERLY CONFIGURE SimpleSAMLphp. A SECURE CONFIGURATION IS NOT PART OF THE PACKAGE!**
     
 ## Sample setup
 
 As a sample and for test purposes, the serverless SAML identity provider [Samling](https://capriza.github.io/samling/samling.html) 
-is configured most basically as follows:
+can be configured most basically as follows:
     
     mkdir Configuration/SimpleSamlPhp/metadata
     cp Packages/Libraries/simplesamlphp/simplesamlphp/metadata-templates/saml20-idp-remote.php Configuration/SimpleSamlPhp/metadata/
     
-Make sure you set the `metadatadir` property in the config.php accordingly.
-
 Add the following metadata config to `Configuration/SimpleSamlPhp/metadata/saml20-idp-remote.php`:
 
     $metadata['https://capriza.github.io/samling/samling.html'] = array(

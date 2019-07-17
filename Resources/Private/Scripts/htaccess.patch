@@ -1,0 +1,15 @@
+*** Web/.htaccess	Thu Jul 18 07:11:46 2019
+--- Web/.htaccess.p	Thu Jul 18 07:11:46 2019
+***************
+*** 25,30 ****
+--- 25,34 ----
+  	# of the website root.
+  	RewriteBase /
+  
++ 	# SimpleSamlPhp config
++ 	SetEnv SIMPLESAMLPHP_CONFIG_DIR ../Configuration/SimpleSamlPhp/config
++ 	RewriteRule ^(simplesaml/) - [L]
++ 
+  	# Stop rewrite processing no matter if a package resource, robots.txt etc. exists or not
+  	RewriteRule ^(_Resources/Packages/|robots\.txt|favicon\.ico) - [L]
+  
