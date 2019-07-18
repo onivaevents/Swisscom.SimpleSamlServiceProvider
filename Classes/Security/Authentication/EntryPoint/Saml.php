@@ -7,10 +7,10 @@ namespace Swisscom\SimpleSamlServiceProvider\Security\Authentication\EntryPoint;
 
 use SimpleSAML\Auth\Simple;
 use Swisscom\SimpleSamlServiceProvider\Exception;
-use TYPO3\Flow\Http\Request;
-use TYPO3\Flow\Http\Response;
-use TYPO3\Flow\Security\Authentication\EntryPoint\AbstractEntryPoint;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Http\Request;
+use Neos\Flow\Http\Response;
+use Neos\Flow\Security\Authentication\EntryPoint\AbstractEntryPoint;
+use Neos\Flow\Annotations as Flow;
 
 
 class Saml extends AbstractEntryPoint

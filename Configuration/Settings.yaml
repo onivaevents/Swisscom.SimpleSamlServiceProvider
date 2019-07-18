@@ -1,24 +1,23 @@
+
 Swisscom:
   SimpleSamlServiceProvider:
-    authSource: 'default-sp'
-    authTokenCookieName: 'SimpleSAMLAuthToken'
+    authSource: default-sp
+    authTokenCookieName: SimpleSAMLAuthToken
     attributeKeys:
       # ADFS claim: The unique name of the user
       username: 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'
-    loginParams: []
+    loginParams: {  }
       #'ReturnTo': ''
-    logoutParams: []
+    logoutParams: {  }
       #'ReturnTo': ''
-
-TYPO3:
+Neos:
   Flow:
     security:
       authentication:
         providers:
           SamlProvider:
-            token: 'Swisscom\SimpleSamlServiceProvider\Security\Authentication\Token\SamlToken'
-            provider: 'Swisscom\SimpleSamlServiceProvider\Security\Authentication\Provider\SamlProvider'
-            #entryPoint: 'Swisscom\SimpleSamlServiceProvider\Security\Authentication\EntryPoint\Saml'
+            token: Swisscom\SimpleSamlServiceProvider\Security\Authentication\Token\SamlToken
+            provider: Swisscom\SimpleSamlServiceProvider\Security\Authentication\Provider\SamlProvider
             #entryPoint: 'WebRedirect'
             #entryPointOptions:
             #  routeValues:

@@ -5,7 +5,7 @@ namespace Swisscom\SimpleSamlServiceProvider\Authentication;
  * This file is part of the Swisscom.SimpleSamlServiceProvider package.
  */
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * @Flow\Scope("singleton")

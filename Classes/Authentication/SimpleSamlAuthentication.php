@@ -7,8 +7,8 @@ namespace Swisscom\SimpleSamlServiceProvider\Authentication;
  */
 
 use Swisscom\SimpleSamlServiceProvider\Security\Authentication\Token\SamlToken;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Session\SessionInterface;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Session\SessionInterface;
 
 /**
  * @Flow\Scope("singleton")
@@ -30,7 +30,7 @@ class SimpleSamlAuthentication extends \SimpleSAML\Auth\Simple implements Authen
 
     /**
      * @Flow\Inject
-     * @var \TYPO3\Flow\Security\Authentication\AuthenticationManagerInterface
+     * @var \Neos\Flow\Security\Authentication\AuthenticationManagerInterface
      */
     protected $authenticationManager;
 
@@ -43,7 +43,7 @@ class SimpleSamlAuthentication extends \SimpleSAML\Auth\Simple implements Authen
         foreach ($this->authenticationManager->getTokens() as $token) {
             if ($token instanceof SamlToken) {
                 /** Logout will redirect and not return to logout process. Therefore the session is destroyed here.
-                 * @see \TYPO3\Flow\Security\Authentication\AuthenticationProviderManager::logout() */
+                 * @see \Neos\Flow\Security\Authentication\AuthenticationProviderManager::logout() */
                 if ($this->session->isStarted()) {
                     $this->session->destroy('Logout through SimpleSamlAuthentication');
                 }

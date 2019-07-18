@@ -6,9 +6,9 @@ namespace Swisscom\SimpleSamlServiceProvider\Security\Authentication\Token;
  */
 
 use SimpleSAML\Auth\Simple;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Object\DependencyInjection\DependencyProxy;
-use TYPO3\Flow\Security\Authentication\Token\AbstractToken;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\ObjectManagement\DependencyInjection\DependencyProxy;
+use Neos\Flow\Security\Authentication\Token\AbstractToken;
 
 
 class SamlToken extends AbstractToken
@@ -33,10 +33,10 @@ class SamlToken extends AbstractToken
     protected $usernameAttributeKey;
 
     /**
-     * @param \TYPO3\Flow\Mvc\ActionRequest $actionRequest
+     * @param \Neos\Flow\Mvc\ActionRequest $actionRequest
      * @return void
      */
-    public function updateCredentials(\TYPO3\Flow\Mvc\ActionRequest $actionRequest)
+    public function updateCredentials(\Neos\Flow\Mvc\ActionRequest $actionRequest)
     {
         if ($this->authenticationInterface instanceof DependencyProxy) {
             $this->authenticationInterface->_activateDependency();

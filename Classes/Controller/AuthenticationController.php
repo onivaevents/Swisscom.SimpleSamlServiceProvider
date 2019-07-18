@@ -6,10 +6,10 @@ namespace Swisscom\SimpleSamlServiceProvider\Controller;
  */
 
 use SimpleSAML\Auth\Simple;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Mvc\ActionRequest;
-use TYPO3\Flow\Security\Authentication\Controller\AbstractAuthenticationController;
-use TYPO3\Flow\Security\Exception\AuthenticationRequiredException;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Mvc\ActionRequest;
+use Neos\Flow\Security\Authentication\Controller\AbstractAuthenticationController;
+use Neos\Flow\Security\Exception\AuthenticationRequiredException;
 
 
 class AuthenticationController extends AbstractAuthenticationController
@@ -17,7 +17,7 @@ class AuthenticationController extends AbstractAuthenticationController
 
     /**
      * @Flow\Inject
-     * @var \TYPO3\Flow\Security\Context
+     * @var \Neos\Flow\Security\Context
      */
     protected $securityContext;
 

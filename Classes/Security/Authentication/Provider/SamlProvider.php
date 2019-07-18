@@ -6,13 +6,13 @@ namespace Swisscom\SimpleSamlServiceProvider\Security\Authentication\Provider;
  */
 
 use Swisscom\SimpleSamlServiceProvider\Security\Authentication\Token\SamlToken;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Security\Account;
-use TYPO3\Flow\Security\AccountRepository;
-use TYPO3\Flow\Security\Authentication\Provider\AbstractProvider;
-use TYPO3\Flow\Security\Authentication\TokenInterface;
-use TYPO3\Flow\Security\Context;
-use TYPO3\Flow\Security\Exception\UnsupportedAuthenticationTokenException;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Security\Account;
+use Neos\Flow\Security\AccountRepository;
+use Neos\Flow\Security\Authentication\Provider\AbstractProvider;
+use Neos\Flow\Security\Authentication\TokenInterface;
+use Neos\Flow\Security\Context;
+use Neos\Flow\Security\Exception\UnsupportedAuthenticationTokenException;
 
 
 class SamlProvider extends AbstractProvider
@@ -30,7 +30,7 @@ class SamlProvider extends AbstractProvider
     protected $securityContext;
 
     /**
-     * @var \TYPO3\Flow\Persistence\PersistenceManagerInterface
+     * @var \Neos\Flow\Persistence\PersistenceManagerInterface
      * @Flow\Inject
      */
     protected $persistenceManager;
