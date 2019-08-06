@@ -31,7 +31,11 @@ class InstallerScripts
             return;
         }
 
-        Files::createRelativeSymlink('Packages/Libraries/simplesamlphp/simplesamlphp/www', $symlink);
+        try {
+            Files::createRelativeSymlink('Packages/Libraries/simplesamlphp/simplesamlphp/www', $symlink);
+        } catch (\ErrorException $e) {
+            echo 'SimpleSamlPhp app setup: Create symlink failed!' . PHP_EOL;
+        }
 
         $original = 'Web/.htaccess';
         $patch = 'Packages/Application/Swisscom.SimpleSamlServiceProvider/Resources/Private/Scripts/htaccess.patch';
