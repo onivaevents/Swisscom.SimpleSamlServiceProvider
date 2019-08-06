@@ -4,6 +4,7 @@ namespace Swisscom\SimpleSamlServiceProvider\Composer;
 /*
  * This file is part of the Swisscom.SimpleSamlServiceProvider package.
  */
+use Neos\Utility\Files;
 
 /**
  * Composer install scripts to setup simplesamlphp
@@ -30,13 +31,13 @@ class InstallerScripts
             return;
         }
 
-        symlink('../Packages/Libraries/simplesamlphp/simplesamlphp/www', $symlink);
+        Files::createRelativeSymlink('Packages/Libraries/simplesamlphp/simplesamlphp/www', $symlink);
 
         $original = 'Web/.htaccess';
         $patch = 'Packages/Application/Swisscom.SimpleSamlServiceProvider/Resources/Private/Scripts/htaccess.patch';
         exec(sprintf("patch %s < %s", $original, $patch));
         if (file_exists($original . '.rej')) {
-            unlink($original . '.rej');
+            Files::unlink($original . '.rej');
             echo 'SimpleSamlPhp app setup: Patch for .htaccess failed!' . PHP_EOL;
         }
         echo 'SimpleSamlPhp app setup completed' . PHP_EOL;
@@ -52,13 +53,12 @@ class InstallerScripts
             return;
         }
 
-        mkdir($configurationDirectory);
+        Files::createDirectoryRecursively($configurationDirectory . '/config');
+        Files::createDirectoryRecursively($configurationDirectory . '/metadata');
 
         $source = 'Packages/Application/Swisscom.SimpleSamlServiceProvider/Resources/Private/Scripts/config-templates';
         $destination = $configurationDirectory . '/config';
-        exec(sprintf("cp -r %s %s", $source, $destination));
-
-        mkdir($configurationDirectory . '/metadata');
+        Files::copyDirectoryRecursively($source, $destination);
 
         echo 'SimpleSamlPhp configuration setup completed' . PHP_EOL;
     }
