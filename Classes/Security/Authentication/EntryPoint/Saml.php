@@ -42,7 +42,12 @@ class Saml extends AbstractEntryPoint
             // Should automatically be authenticated by the SamlProvider, but something went wrong.
             throw new Exception('User is authenticated by the identity provider, but not able to be authenticated by system.', 1516117713);
         } else {
-            $authentication->requireAuth($this->settings['loginParams']);
+            $params = $this->settings['loginParams'];
+            $options = $this->getOptions();
+            if (isset($options['loginParams'])) {
+                $params = array_merge($params, $options['loginParams']);
+            }
+            $authentication->requireAuth($params);
         }
     }
 }

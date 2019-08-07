@@ -18,6 +18,10 @@ Neos:
           SamlProvider:
             token: Swisscom\SimpleSamlServiceProvider\Security\Authentication\Token\SamlToken
             provider: Swisscom\SimpleSamlServiceProvider\Security\Authentication\Provider\SamlProvider
+            #entryPoint: 'Saml'
+            #entryPointOptions:
+            #  loginParams:
+            #    'ReturnTo': ''
             #entryPoint: 'WebRedirect'
             #entryPointOptions:
             #  routeValues:
