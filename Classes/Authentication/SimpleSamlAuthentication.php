@@ -6,9 +6,9 @@ namespace Swisscom\SimpleSamlServiceProvider\Authentication;
  * This file is part of the Swisscom.SimpleSamlServiceProvider package.
  */
 
+use Neos\Flow\Session\SessionManagerInterface;
 use Swisscom\SimpleSamlServiceProvider\Security\Authentication\Token\SamlToken;
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Session\SessionInterface;
 
 /**
  * @Flow\Scope("singleton")
@@ -23,10 +23,10 @@ class SimpleSamlAuthentication extends \SimpleSAML\Auth\Simple implements Authen
     protected $logoutParams;
 
     /**
-     * @var SessionInterface
+     * @var SessionManagerInterface
      * @Flow\Inject
      */
-    protected $session;
+    protected $sessionManager;
 
     /**
      * @Flow\Inject
@@ -39,13 +39,15 @@ class SimpleSamlAuthentication extends \SimpleSAML\Auth\Simple implements Authen
      */
     public function logout($params = null)
     {
+        // TODO: Adapt to \Neos\Flow\Security\Authentication\AuthenticationProviderManager::logout() or even call the method directly if possible
+        $session = $this->sessionManager->getCurrentSession();
         $params = is_array($params) ? array_merge($this->logoutParams, $params) : $this->logoutParams;
         foreach ($this->authenticationManager->getTokens() as $token) {
             if ($token instanceof SamlToken) {
                 /** Logout will redirect and not return to logout process. Therefore the session is destroyed here.
                  * @see \Neos\Flow\Security\Authentication\AuthenticationProviderManager::logout() */
-                if ($this->session->isStarted()) {
-                    $this->session->destroy('Logout through SimpleSamlAuthentication');
+                if ($session->isStarted()) {
+                    $session->destroy('Logout through SimpleSamlAuthentication');
                 }
                 parent::logout($params);
                 return;

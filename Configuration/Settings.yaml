@@ -8,8 +8,6 @@ Swisscom:
       username: 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'
     loginParams: {  }
       #'ReturnTo': ''
-    logoutParams: {  }
-      #'ReturnTo': ''
 Neos:
   Flow:
     security:

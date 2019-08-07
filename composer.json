@@ -22,7 +22,7 @@
         "neos": {
             "package-key": "Swisscom.SimpleSamlServiceProvider"
         },
-        "typo3/flow": {
+        "neos/flow": {
             "post-install": "Swisscom\\SimpleSamlServiceProvider\\Composer\\InstallerScripts::postUpdateAndInstall",
             "post-update": "Swisscom\\SimpleSamlServiceProvider\\Composer\\InstallerScripts::postUpdateAndInstall"
         },
