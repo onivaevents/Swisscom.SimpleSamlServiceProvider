@@ -1,6 +1,7 @@
 {
     "description": "Neos Flow package containing a SAML service provider based on SimpleSAMLphp.",
     "type": "neos-package",
+    "license": "MIT",
     "keywords": [
         "saml",
         "authentication",
