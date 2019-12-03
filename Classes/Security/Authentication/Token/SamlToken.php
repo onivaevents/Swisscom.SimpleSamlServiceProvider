@@ -48,7 +48,7 @@ class SamlToken extends AbstractToken
                 /** @var \SAML2\XML\saml\NameID $nameId */
                 $nameId = $authDataArray['saml:sp:NameID'];
                 if (!empty($nameId)) {
-                    $this->credentials['username'] = $nameId->value;
+                    $this->credentials['username'] = $nameId->getValue();
                 } elseif (!empty($this->usernameAttributeKey) && array_key_exists($this->usernameAttributeKey, $attributes)) {
                     $username = $attributes[$this->usernameAttributeKey];
                     // ADFS sends the claims back as array
