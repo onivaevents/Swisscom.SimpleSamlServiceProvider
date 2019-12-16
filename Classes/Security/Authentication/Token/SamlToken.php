@@ -45,14 +45,20 @@ class SamlToken extends AbstractToken
             $attributes = $this->authenticationInterface->getAttributes();
             $authDataArray = $this->authenticationInterface->getAuthDataArray();
             if (is_array($authDataArray)) {
-                /** @var \SAML2\XML\saml\NameID $nameId */
-                $nameId = $authDataArray['saml:sp:NameID'];
-                if (!empty($nameId)) {
-                    $this->credentials['username'] = $nameId->getValue();
-                } elseif (!empty($this->usernameAttributeKey) && array_key_exists($this->usernameAttributeKey, $attributes)) {
+
+                // Special case: use username defined by attribute key setting
+                if (!empty($this->usernameAttributeKey) && array_key_exists($this->usernameAttributeKey, $attributes)) {
                     $username = $attributes[$this->usernameAttributeKey];
                     // ADFS sends the claims back as array
                     $this->credentials['username'] = is_array($username) ? array_shift($username) : $username;
+
+                // Default case: use SAML default nameId property
+                } else {
+                    /** @var \SAML2\XML\saml\NameID $nameId */
+                    $nameId = $authDataArray['saml:sp:NameID'];
+                    if (!empty($nameId)) {
+                        $this->credentials['username'] = $nameId->getValue();
+                    }
                 }
                 $this->setAuthenticationStatus(self::AUTHENTICATION_NEEDED);
                 $this->credentials['attributes'] = $attributes;
