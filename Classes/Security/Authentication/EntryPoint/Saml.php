@@ -37,6 +37,10 @@ class Saml extends AbstractEntryPoint
     {
         /** @var Simple $authentication */
         $authentication = $this->authenticationInterface;
+        if ($authentication === null) {
+            return;
+        }
+
         if ($authentication->isAuthenticated()) {
             $authentication->logout();
             // Should automatically be authenticated by the SamlProvider, but something went wrong.
