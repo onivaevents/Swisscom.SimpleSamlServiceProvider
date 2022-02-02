@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Swisscom\SimpleSamlServiceProvider\Composer;
 
 /*
@@ -11,10 +14,7 @@ use Neos\Utility\Files;
  */
 class InstallerScripts
 {
-    /**
-     * @return void
-     */
-    public static function postUpdateAndInstall()
+    public static function postUpdateAndInstall(): void
     {
         self::setupSimpleSamlPhpApp();
         self::setupSimpleSamlPhpConfig();
@@ -24,7 +24,7 @@ class InstallerScripts
      * Set symlink to the simplesamlphp's www directory
      * Patch the Web/.htaccess file with rewrite rule and config env variable
      */
-    protected static function setupSimpleSamlPhpApp()
+    protected static function setupSimpleSamlPhpApp(): void
     {
         $symlink = 'Web/simplesaml';
         if (file_exists($symlink)) {
@@ -50,7 +50,7 @@ class InstallerScripts
     /**
      * Create the config file structure
      */
-    protected static function setupSimpleSamlPhpConfig()
+    protected static function setupSimpleSamlPhpConfig(): void
     {
         $configurationDirectory = 'Configuration/SimpleSamlPhp';
         if (is_dir($configurationDirectory)) {
