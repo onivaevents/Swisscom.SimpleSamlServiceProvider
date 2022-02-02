@@ -23,7 +23,7 @@ To enable it, add the following block to your composer.json
 
 ## Sample setup
 
-As a sample and for test purposes, the serverless SAML identity provider [Samling](https://capriza.github.io/samling/samling.html) 
+As a sample and for test purposes, the serverless SAML identity provider [Samling](https://fujifish.github.io/samling/samling.html) 
 can be configured most basically as follows:
     
     mkdir Configuration/SimpleSamlPhp/metadata
@@ -31,13 +31,13 @@ can be configured most basically as follows:
     
 Add the following metadata config to `Configuration/SimpleSamlPhp/metadata/saml20-idp-remote.php`:
 
-    $metadata['https://capriza.github.io/samling/samling.html'] = array(
+    $metadata['https://fujifish.github.io/samling/samling.html'] = array(
         /* Configuration options for the first IdP. */
-        'SingleSignOnService' => 'https://capriza.github.io/samling/samling.html',
+        'SingleSignOnService' => 'https://fujifish.github.io/samling/samling.html',
         'certificate' => 'samling.pub'
     );
 
-The certificate is copied from `https://capriza.github.io/samling/samling.html` to the cert folder (see `certdir` in config.php). 
+The certificate is copied from `https://fujifish.github.io/samling/samling.html` to the cert folder (see `certdir` in config.php). 
 
 ## Integration
 
