@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Swisscom\SimpleSamlServiceProvider\Authentication;
 
 /*
@@ -12,12 +15,7 @@ use Neos\Flow\Annotations as Flow;
  */
 class AuthenticationFactory
 {
-    /**
-     * @param string $authenticationObjectClassName
-     * @param string $authSource
-     * @return AuthenticationInterface
-     */
-    public function create($authenticationObjectClassName, $authSource)
+    public function create(string $authenticationObjectClassName, string $authSource)
     {
         try {
             $authenticationInterface = new $authenticationObjectClassName($authSource);

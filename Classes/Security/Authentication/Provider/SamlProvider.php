@@ -1,68 +1,71 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Swisscom\SimpleSamlServiceProvider\Security\Authentication\Provider;
 
 /*
  * This file is part of the Swisscom.SimpleSamlServiceProvider package.
  */
 
+use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Swisscom\SimpleSamlServiceProvider\Security\Authentication\Token\SamlToken;
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Security\Account;
 use Neos\Flow\Security\AccountRepository;
 use Neos\Flow\Security\Authentication\Provider\AbstractProvider;
 use Neos\Flow\Security\Authentication\TokenInterface;
 use Neos\Flow\Security\Context;
 use Neos\Flow\Security\Exception\UnsupportedAuthenticationTokenException;
 
-
 class SamlProvider extends AbstractProvider
 {
     /**
-     * @var AccountRepository
      * @Flow\Inject
+     * @var AccountRepository
      */
     protected $accountRepository;
 
     /**
-     * @var Context
      * @Flow\Inject
+     * @var Context
      */
     protected $securityContext;
 
     /**
-     * @var \Neos\Flow\Persistence\PersistenceManagerInterface
      * @Flow\Inject
+     * @var PersistenceManagerInterface
      */
     protected $persistenceManager;
 
     /**
-     * @var string
      * @Flow\InjectConfiguration(path="authTokenCookieName")
+     * @var string
      */
     protected $authTokenCookieName;
 
     /**
      * Returns the class names of the tokens this provider can authenticate.
      *
-     * @return array
+     * @return string[]
      */
-    public function getTokenClassNames()
+    public function getTokenClassNames(): array
     {
-        return array(SamlToken::class);
+        return [SamlToken::class];
     }
 
     /**
-     * @param TokenInterface $authenticationToken The token to be authenticated
-     * @return void
+     * @param TokenInterface $authenticationToken
      * @throws UnsupportedAuthenticationTokenException
      */
-    public function authenticate(TokenInterface $authenticationToken)
+    public function authenticate(TokenInterface $authenticationToken): void
     {
         if (!($authenticationToken instanceof SamlToken)) {
-            throw new UnsupportedAuthenticationTokenException('This provider cannot authenticate the given token.', 1516021100);
+            throw new UnsupportedAuthenticationTokenException(
+                'This provider cannot authenticate the given token.',
+                1516021100
+            );
         }
 
-        /** @var $account Account */
         $account = null;
         $credentials = $authenticationToken->getCredentials();
 
@@ -72,9 +75,14 @@ class SamlProvider extends AbstractProvider
 
         $providerName = $this->name;
         $accountRepository = $this->accountRepository;
-        $this->securityContext->withoutAuthorizationChecks(function () use ($credentials, $providerName, $accountRepository, &$account) {
-            $account = $accountRepository->findActiveByAccountIdentifierAndAuthenticationProviderName($credentials['username'], $providerName);
-        });
+        $this->securityContext->withoutAuthorizationChecks(
+            function () use ($credentials, $providerName, $accountRepository, &$account) {
+                $account = $accountRepository->findActiveByAccountIdentifierAndAuthenticationProviderName(
+                    $credentials['username'],
+                    $providerName
+                );
+            }
+        );
 
         if ($account === null) {
             $authenticationToken->setAuthenticationStatus(TokenInterface::WRONG_CREDENTIALS);
@@ -85,7 +93,7 @@ class SamlProvider extends AbstractProvider
             $this->accountRepository->update($account);
             $this->persistenceManager->whitelistObject($account);
 
-            /* Workaround: Remove the SAML authentication token cookie. The cookies causes problem with CSRF
+            /* Workaround: Remove the SAML authentication token cookie. The cookies cause problems with CSRF
             protection whenever it gets renewed. The token cookie is only used to authenticate. From here on, the
             cookie is not used anymore. */
             setcookie($this->authTokenCookieName, '', time() - 3600, '/');

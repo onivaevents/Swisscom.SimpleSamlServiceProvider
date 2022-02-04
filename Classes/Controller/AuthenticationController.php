@@ -1,48 +1,48 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Swisscom\SimpleSamlServiceProvider\Controller;
 
 /*
  * This file is part of the Swisscom.SimpleSamlServiceProvider package.
  */
 
+use Neos\Flow\Security\Context;
 use SimpleSAML\Auth\Simple;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\ActionRequest;
 use Neos\Flow\Security\Authentication\Controller\AbstractAuthenticationController;
 use Neos\Flow\Security\Exception\AuthenticationRequiredException;
-
+use Swisscom\SimpleSamlServiceProvider\Authentication\AuthenticationInterface;
 
 class AuthenticationController extends AbstractAuthenticationController
 {
 
     /**
      * @Flow\Inject
-     * @var \Neos\Flow\Security\Context
+     * @var Context
      */
     protected $securityContext;
 
     /**
-     * @var \Swisscom\SimpleSamlServiceProvider\Authentication\AuthenticationInterface
      * @Flow\Inject
+     * @var AuthenticationInterface
      */
     protected $authenticationInterface;
 
     /**
      * The login page
-     *
-     * @return void
      */
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->view->assign('account', $this->securityContext->getAccount());
     }
 
     /**
      * @see \Swisscom\SimpleSamlServiceProvider\Security\Authentication\EntryPoint\Saml
-     * @param array $params
-     * @return void
      */
-    public function authenticateAction($params = array())
+    public function authenticateAction(array $params = []): void
     {
         $params = array_merge($this->settings['loginParams'], $params);
         /** @var Simple $authentication */
@@ -52,34 +52,25 @@ class AuthenticationController extends AbstractAuthenticationController
         parent::authenticateAction();
     }
 
-    /**
-     * @param ActionRequest $originalRequest
-     * @return void
-     */
-    protected function onAuthenticationSuccess(ActionRequest $originalRequest = null)
+    protected function onAuthenticationSuccess(?ActionRequest $originalRequest = null): string
     {
         if ($originalRequest instanceof ActionRequest) {
             $this->redirectToRequest($originalRequest);
         } else {
             $this->redirect('index');
         }
+
+        return '';
     }
 
-    /**
-     * @param AuthenticationRequiredException $exception
-     * @return void
-     */
-    protected function onAuthenticationFailure(AuthenticationRequiredException $exception = null)
+    protected function onAuthenticationFailure(?AuthenticationRequiredException $exception = null): void
     {
         parent::onAuthenticationFailure($exception);
 
         $this->redirect('index');
     }
 
-    /**
-     * @return void
-     */
-    public function logoutAction()
+    public function logoutAction(): void
     {
         parent::logoutAction();
 
