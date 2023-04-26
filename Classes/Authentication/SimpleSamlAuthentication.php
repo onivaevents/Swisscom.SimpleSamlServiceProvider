@@ -51,15 +51,21 @@ class SimpleSamlAuthentication extends Simple implements AuthenticationInterface
     public function logout($params = null)
     {
         // TODO: Adapt to \Neos\Flow\Security\Authentication\AuthenticationProviderManager::logout() or even call the method directly if possible
-        $session = $this->sessionManager->getCurrentSession();
-        $params = is_array($params) ? array_merge($this->logoutParams, $params) : $this->logoutParams;
-        if ($this->securityContext->getAuthenticationTokensOfType(SamlToken::class)) {
-            /** Logout will redirect and not return to logout process. Therefore the session is destroyed here.
-             * @see \Neos\Flow\Security\Authentication\AuthenticationProviderManager::logout() */
-            if ($session->isStarted()) {
-                $session->destroy('Logout through SimpleSamlAuthentication');
+        $tokens = $this->securityContext->getAuthenticationTokensOfType(SamlToken::class);
+        foreach ($tokens as $token) {
+            if ($token->isAuthenticated()) {
+                $session = $this->sessionManager->getCurrentSession();
+                $logoutParams = array_filter($this->logoutParams);
+                $params = is_array($params) ? array_merge($logoutParams, $params) : $logoutParams;
+
+                /** Logout will redirect and not return to logout process. Therefore the session is destroyed here.
+                 * @see \Neos\Flow\Security\Authentication\AuthenticationProviderManager::logout()
+                 */
+                if ($session->isStarted()) {
+                    $session->destroy('Logout through SimpleSamlAuthentication');
+                }
+                parent::logout($params);
             }
-            parent::logout($params);
         }
     }
 }
