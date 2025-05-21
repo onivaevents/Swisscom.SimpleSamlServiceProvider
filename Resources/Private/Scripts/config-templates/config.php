@@ -1,6 +1,6 @@
 <?php
 
-include(dirname(__FILE__) . '/../../../Packages/Libraries/simplesamlphp/simplesamlphp/config-templates/config.php');
+include(dirname(__FILE__) . '/../../../Packages/Libraries/simplesamlphp/simplesamlphp/config/config.php.dist');
 
 $config['metadatadir'] = dirname(__FILE__) . '/../metadata/';
 $config['loggingdir'] = dirname(__FILE__) . '/../../../Data/Logs/';

@@ -11,7 +11,7 @@
     ],
     "require": {
         "neos/flow": "^6.0 || ^7.0 || ^8.0",
-        "simplesamlphp/simplesamlphp": "~1.17"
+        "simplesamlphp/simplesamlphp": "^2.0"
     },
     "name": "swisscom/simplesamlserviceprovider",
     "autoload": {
