@@ -15,9 +15,6 @@ use SimpleSAML\Auth\Simple;
 use Swisscom\SimpleSamlServiceProvider\Security\Authentication\Token\SamlToken;
 use Neos\Flow\Annotations as Flow;
 
-/**
- * @Flow\Scope("singleton")
- */
 class SimpleSamlAuthentication extends Simple implements AuthenticationInterface
 {
 

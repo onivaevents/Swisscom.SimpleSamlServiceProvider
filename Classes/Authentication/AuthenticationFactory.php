@@ -15,8 +15,17 @@ use Neos\Flow\Annotations as Flow;
  */
 class AuthenticationFactory
 {
-    public function create(string $authenticationObjectClassName, string $authSource)
+    /**
+     * @var array<string, array<string, AuthenticationInterface>>
+     */
+    protected array $authenticationObjectClasses = [];
+
+    public function create(string $authenticationObjectClassName, ?string $authSource = null)
     {
+        if (isset($this->authenticationObjectClasses[$authenticationObjectClassName][$authSource])) {
+            return $this->authenticationObjectClasses[$authenticationObjectClassName][$authSource];
+        }
+
         try {
             $authenticationInterface = new $authenticationObjectClassName($authSource);
         } catch (\SimpleSAML\Error\CriticalConfigurationError $e) {
@@ -24,6 +33,9 @@ class AuthenticationFactory
             The config path is set as environment variable via SetEnv(). */
             $authenticationInterface = null;
         }
+
+        $this->authenticationObjectClasses[$authenticationObjectClassName][$authSource] = $authenticationInterface;
+
         return $authenticationInterface;
     }
 }

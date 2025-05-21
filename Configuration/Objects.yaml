@@ -1,5 +1,4 @@
 Swisscom\SimpleSamlServiceProvider\Authentication\AuthenticationInterface:
-  scope: singleton
   factoryObjectName: Swisscom\SimpleSamlServiceProvider\Authentication\AuthenticationFactory
   arguments:
     1:
