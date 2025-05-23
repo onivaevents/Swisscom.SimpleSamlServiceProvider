@@ -3,23 +3,27 @@
 
 ## Installation
 
-First, install this package via composer. It will add [simplesamlphp/simplesamlphp](https://github.com/simplesamlphp/simplesamlphp) as dependency.
+Cf: https://simplesamlphp.org/docs/2.4/simplesamlphp-install.html
  
-Several configuration steps have to be done:
+Install this package via composer. It will add [simplesamlphp/simplesamlphp](https://github.com/simplesamlphp/simplesamlphp) as dependency.
 
-1. Create symlink `Web/simplesamlphp -> ../Packages/Libraries/simplesamlphp/simplesamlphp/www`
-2. Patch the Apache .htaccess configuration to not rewrite simplesamlphp and set the `SIMPLESAMLPHP_CONFIG_DIR` environment var.
-3. Copy the example config structure to the `SIMPLESAMLPHP_CONFIG_DIR` under `Configuration/SimpleSamlPhp/`
+Think as the simplesamlphp installation as an application inside your Flow application. Therefore, have a look at [Installing SimpleSAMLphp in alternative locations](https://simplesamlphp.org/docs/2.4/simplesamlphp-install.html#appendix-installing-simplesamlphp-in-alternative-locations)
 
-This steps can be performed via composer post update and install scripts. They are not included by default inside this package anymore, as it highly depends on the setup whether it is requested to execute it or not.
-To enable it, add the following block to your composer.json
+### Apache
 
-    "extra": {
-        "neos/flow": {
-            "post-install": "Swisscom\\SimpleSamlServiceProvider\\Composer\\InstallerScripts::postUpdateAndInstall",
-            "post-update": "Swisscom\\SimpleSamlServiceProvider\\Composer\\InstallerScripts::postUpdateAndInstall"
-        }
-    }
+1. Create symlink `Web/simplesamlphp -> ../Packages/Libraries/simplesamlphp/simplesamlphp/public`
+2. Patch the Apache .htaccess configuration to not rewrite simplesamlphp and set the `SIMPLESAMLPHP_CONFIG_DIR` environment var. There is apatch for you: [htaccess.patch](Resources/Private/Scripts/htaccess.patch)
+
+
+### Nginx
+
+For Nginx you we don't need a symlink. 
+
+1. Use the configuration from here: [Configuring Nginx](https://simplesamlphp.org/docs/2.4/simplesamlphp-install.html#configuring-nginx)
+2. Adapt the alias to the absolut path of your installation.
+
+As a starting point for the coinfiguration, copy the example structure to the `SIMPLESAMLPHP_CONFIG_DIR` under `Configuration/SimpleSamlPhp/`
+
 
 ## Sample setup
 
@@ -27,13 +31,18 @@ As a sample and for test purposes, the serverless SAML identity provider [Samlin
 can be configured most basically as follows:
     
     mkdir Configuration/SimpleSamlPhp/metadata
-    cp Packages/Libraries/simplesamlphp/simplesamlphp/metadata-templates/saml20-idp-remote.php Configuration/SimpleSamlPhp/metadata/
+    cp Packages/Libraries/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php.dist Configuration/SimpleSamlPhp/metadata/saml20-idp-remote.php
     
 Add the following metadata config to `Configuration/SimpleSamlPhp/metadata/saml20-idp-remote.php`:
 
     $metadata['https://fujifish.github.io/samling/samling.html'] = array(
         /* Configuration options for the first IdP. */
-        'SingleSignOnService' => 'https://fujifish.github.io/samling/samling.html',
+        'SingleSignOnService' => [
+            [
+                'Location' => 'https://fujifish.github.io/samling/samling.html',
+                'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+            ],
+        ],
         'certificate' => 'samling.pub'
     );
 

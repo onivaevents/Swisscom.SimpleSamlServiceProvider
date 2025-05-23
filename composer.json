@@ -10,8 +10,8 @@
         "Flow"
     ],
     "require": {
-        "neos/flow": "^6.0 || ^7.0",
-        "simplesamlphp/simplesamlphp": "~1.17"
+        "neos/flow": "^6.0 || ^7.0 || ^8.0",
+        "simplesamlphp/simplesamlphp": "^2.0"
     },
     "name": "swisscom/simplesamlserviceprovider",
     "autoload": {
@@ -76,7 +76,8 @@
             "Neos.Flow-20201003165200",
             "Neos.Flow-20201109224100",
             "Neos.Flow-20201205172733",
-            "Neos.Flow-20201207104500"
+            "Neos.Flow-20201207104500",
+            "Neos.Flow-20220318174300"
         ]
     }
 }

@@ -15,9 +15,6 @@ use SimpleSAML\Auth\Simple;
 use Swisscom\SimpleSamlServiceProvider\Security\Authentication\Token\SamlToken;
 use Neos\Flow\Annotations as Flow;
 
-/**
- * @Flow\Scope("singleton")
- */
 class SimpleSamlAuthentication extends Simple implements AuthenticationInterface
 {
 
@@ -48,7 +45,7 @@ class SimpleSamlAuthentication extends Simple implements AuthenticationInterface
     /**
      * @param string|array|null $params
      */
-    public function logout($params = null)
+    public function logout($params = null): void
     {
         // TODO: Adapt to \Neos\Flow\Security\Authentication\AuthenticationProviderManager::logout() or even call the method directly if possible
         $tokens = $this->securityContext->getAuthenticationTokensOfType(SamlToken::class);

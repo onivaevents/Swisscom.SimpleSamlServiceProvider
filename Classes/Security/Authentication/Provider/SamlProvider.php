@@ -91,7 +91,13 @@ class SamlProvider extends AbstractProvider
             $account->authenticationAttempted(TokenInterface::AUTHENTICATION_SUCCESSFUL);
             $authenticationToken->setAccount($account);
             $this->accountRepository->update($account);
-            $this->persistenceManager->whitelistObject($account);
+
+            // Flow backwards compatibility check
+            if (method_exists($this->persistenceManager, 'allowObject')) {
+                $this->persistenceManager->allowObject($account);
+            } else {
+                $this->persistenceManager->whitelistObject($account);
+            }
 
             /* Workaround: Remove the SAML authentication token cookie. The cookies cause problems with CSRF
             protection whenever it gets renewed. The token cookie is only used to authenticate. From here on, the
